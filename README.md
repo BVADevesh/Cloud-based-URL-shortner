@@ -1,160 +1,268 @@
+# 🔗 Cloud-Agnostic URL Shortener
 
+A fast and scalable URL shortening service built with **Node.js**, **Express**, and **PostgreSQL/MongoDB** support. The application can run locally, on any cloud provider, or on AWS infrastructure using Docker and Terraform.
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-</head>
-<body>
+---
 
-  <h1>🔗 URL Shortener</h1>
-  <p>A simple and fast URL shortening service built with <strong>Node.js</strong>, <strong>Express</strong>, and <strong>MongoDB</strong>.</p>
+## 🚀 Features
 
-  <h2>🚀 Features</h2>
-  <ul>
-    <li>Shorten any valid long URL</li>
-    <li>Unique short codes generated using <code>shortid</code></li>
-    <li>Redirect users to original URLs</li>
-    <li>Easy REST API interface</li>
-    <li>Powered by MongoDB and Mongoose</li>
-  </ul>
+- Shorten any valid long URL
+- Generate unique short codes
+- Redirect users to original URLs
+- REST API support
+- Database-backed URL storage
+- Dockerized deployment
+- Cloud-agnostic architecture
+- AWS deployment support using Terraform
 
-  <h2>📁 Project Structure</h2>
-  <pre>
+---
+
+## 📁 Project Structure
+
+```text
 URL_shortener/
 ├── models/
 │   └── Url.js
 ├── server.js
 ├── package.json
-└── package-lock.json
-  </pre>
+├── package-lock.json
+├── docker-compose.yml
+├── .env.example
+└── terraform/
+```
 
-  <h2>🧪 Getting Started</h2>
-  <ol>
-    <li><strong>Clone the repository:</strong>
-      <pre><code>git clone https://github.com/yourusername/URL_shortener.git
-cd URL_shortener</code></pre>
-    </li>
-    <li><strong>Install dependencies:</strong>
-      <pre><code>npm install</code></pre>
-    </li>
-    <li><strong>Start MongoDB:</strong> Ensure it's running locally on default port.</li>
-    <li><strong>Run the server:</strong>
-      <pre><code>npm start</code></pre>
-      Access it at <code>http://localhost:3000</code>
-    </li>
-  </ol>
+---
 
-  <h2>🔧 API Endpoints</h2>
-  <h3>POST /shorten</h3>
-  <p>Create a shortened URL</p>
-  <p><strong>Request Body:</strong></p>
-  <pre><code>{
+## 🛠️ Tech Stack
+
+- Node.js
+- Express.js
+- PostgreSQL / MongoDB
+- Docker
+- Terraform
+- AWS EC2 (Optional Cloud Deployment)
+
+---
+
+## ⚙️ Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/yourusername/URL_shortener.git
+cd URL_shortener
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Configure Environment
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Update values as required.
+
+---
+
+## ▶️ Run Locally
+
+### Option 1: Direct Execution
+
+Start your database service and run:
+
+```bash
+npm start
+```
+
+Application will be available at:
+
+```text
+http://localhost:3000
+```
+
+### Option 2: Docker Deployment
+
+Build and run containers:
+
+```bash
+docker-compose up --build -d
+```
+
+Access the API:
+
+```text
+http://localhost:3000
+```
+
+---
+
+## 🔧 API Endpoints
+
+### Create Short URL
+
+**POST** `/shorten`
+
+Request:
+
+```json
+{
   "longUrl": "https://example.com"
-}</code></pre>
+}
+```
 
-  <p><strong>Response:</strong></p>
-  <pre><code>{
+Response:
+
+```json
+{
   "shortUrl": "http://localhost:3000/abc123"
-}</code></pre>
+}
+```
 
-  <h3>GET /:shortCode</h3>
-  <p>Redirects to the original long URL</p>
+---
 
-  <h2>📦 Example</h2>
-  <pre><code>curl -X POST http://localhost:3000/shorten \
-  -H "Content-Type: application/json" \
-  -d '{"longUrl":"https://www.google.com"}'</code></pre>
+### Redirect to Original URL
 
-  <p>Then open <code>http://localhost:3000/&lt;shortCode&gt;</code> in your browser.</p>
+**GET** `/:shortCode`
 
-  <h2>🧰 Built With</h2>
-  <ul>
-    <li><a href="https://nodejs.org/">Node.js</a></li>
-    <li><a href="https://expressjs.com/">Express</a></li>
-    <li><a href="https://www.mongodb.com/">MongoDB</a></li>
-    <li><a href="https://mongoosejs.com/">Mongoose</a></li>
-    <li><a href="https://www.npmjs.com/package/shortid">shortid</a></li>
-  </ul>
-  <h2>🙋‍♀️ Author</h2>
-  <ul>
-    <li>GitHub: <a href="https://github.com/klu2200032499">@klu2200032499</a></li>
-    <li>Project: <a href="https://github.com/klu2200032499/URL_shortner">URL_shortner</a></li>
-  </ul>
+Example:
 
-</body>
-</html>
+```text
+http://localhost:3000/abc123
+```
 
+Redirects the user to the original URL.
 
-# Starter Guide for Creating React app
+---
 
-# Getting Started with Create React App
+## 📦 Example Request
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```bash
+curl -X POST http://localhost:3000/shorten \
+-H "Content-Type: application/json" \
+-d '{"longUrl":"https://www.google.com"}'
+```
 
-## Available Scripts
+Response:
 
-In the project directory, you can run:
+```json
+{
+  "shortUrl": "http://localhost:3000/abc123"
+}
+```
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ☁️ AWS Deployment
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Using Terraform
 
-### `npm test`
+Install Terraform and configure variables inside:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```text
+terraform/variables.tf
+```
 
-### `npm run build`
+Initialize Terraform:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+terraform init
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Deploy Infrastructure:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+terraform apply
+```
 
-### `npm run eject`
+For production environments, consider:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Amazon ECS/Fargate
+- Amazon RDS
+- Application Load Balancer
+- Route 53
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🧪 Available Scripts
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Start Development Server
 
-## Learn More
+```bash
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Run Tests
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm test
+```
 
-### Code Splitting
+### Build Production Version
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+npm run build
+```
 
-### Analyzing the Bundle Size
+### Eject Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+npm run eject
+```
 
-### Making a Progressive Web App
+> Note: Ejecting is irreversible.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 🔒 Environment Variables
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Example configuration:
 
-### Deployment
+```env
+PORT=3000
+DATABASE_URL=your_database_connection_string
+BASE_URL=http://localhost:3000
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+## 📈 Future Enhancements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Custom aliases
+- User authentication
+- Click analytics
+- QR code generation
+- URL expiration
+- Rate limiting
+- Admin dashboard
+
+---
+
+## 👨‍💻 Author
+
+**Bellamkonda V A Devesh**
+
+GitHub: https://github.com/BVADevesh
+
+Project Repository:
+https://github.com/BVADevesh/Cloud-based-URL-shortner
+
+---
+
+## ⭐ Contributing
+
+Contributions, issues, and feature requests are welcome.
+
+Feel free to fork the repository and submit a pull request.
+
+---
+
+## 📄 License
+
+This project is available for educational and personal use under MIT License
